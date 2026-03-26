@@ -8,4 +8,5 @@ public interface IAccountRepository
     Task<Account?> GetByEmailAsync(string email, CancellationToken cancellationToken);
     Task AddAsync(Account account, CancellationToken cancellationToken);
     Task UpdateAsync(Account account, CancellationToken cancellationToken);
+    Task<Account?> GetByRefreshTokenAsync(string requestRefreshToken, CancellationToken cancellationToken);
 }

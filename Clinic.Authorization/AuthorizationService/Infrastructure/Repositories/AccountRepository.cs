@@ -15,7 +15,7 @@ public class AccountRepository : IAccountRepository
         => await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
 
     public async Task<Account?> GetByEmailAsync(string email, CancellationToken cancellationToken) =>
-        await _context.Accounts.FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
+        await _context.Accounts.FirstOrDefaultAsync(a => a.Email == email, cancellationToken);
 
     public async Task AddAsync(Account account, CancellationToken cancellationToken)
     {
@@ -27,5 +27,10 @@ public class AccountRepository : IAccountRepository
     {
         _context.Accounts.Update(account);
         await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<Account?> GetByRefreshTokenAsync(string requestRefreshToken, CancellationToken cancellationToken)
+    {
+        return await _context.Accounts.FirstOrDefaultAsync(a => a.RefreshToken == requestRefreshToken, cancellationToken);
     }
 }

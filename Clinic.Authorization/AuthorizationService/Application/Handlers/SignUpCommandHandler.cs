@@ -1,6 +1,7 @@
 using AuthorizationService.Application.Commands;
 using AuthorizationService.Domain.Entities;
 using AuthorizationService.Domain.Interfaces;
+using AuthorizationService.Domain.ValueObjects;
 using BuildingBlocks.Exceptions;
 using MediatR;
 
@@ -28,7 +29,7 @@ public class SignUpCommandHandler:IRequestHandler<SignUpCommand, Guid>
             throw new DomainException("Введенный Email уже используется");
         }
         var hashedPassword = _passwordHasher.HashPassword(request.Password);
-        var account = new Account(request.Email, hashedPassword);
+        var account = new Account(request.Email, hashedPassword, Role.Patient);
 
         await _accountRepository.AddAsync(account, cancellationToken);
         

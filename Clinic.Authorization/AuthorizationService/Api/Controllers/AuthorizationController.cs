@@ -1,5 +1,7 @@
 using AuthorizationService.Application.Commands;
+using AuthorizationService.Application.DTO;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthorizationService.Api.Controllers;
@@ -24,5 +26,26 @@ public class AuthorizationController: ControllerBase
     {
         await _mediator.Send(command);
         return Ok();
+    }
+    
+    [HttpPost("sign_in_as_patient")]
+    public async Task<IActionResult> SignInAsPatient([FromBody] SignInAsPatientCommand command)
+    {
+        TokenResponse tokens = await _mediator.Send(command);
+        return Ok(tokens);
+    }
+    
+    [HttpPost("refresh_token")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenCommand command)
+    {
+        TokenResponse tokens = await _mediator.Send(command);
+        return Ok(tokens);
+    }
+
+    [HttpPost("test_token")]
+    [Authorize]
+    public async Task<IActionResult> TestToken()
+    {
+        return Ok("Пользователь авторизован");
     }
 }
