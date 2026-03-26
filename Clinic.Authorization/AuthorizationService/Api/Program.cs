@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
         Description =
-            "Введите ваш JWT токен в формате: Bearer {ваш_токен}\n\n(Слово Bearer Swagger подставит сам, просто вставьте длинную строку токена)"
+            "Введите JWT токен"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
